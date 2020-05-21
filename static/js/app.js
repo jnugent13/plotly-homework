@@ -59,6 +59,10 @@ function optionChanged() {
                 size: reversedData.map(object => object.sample_values)
             }
         };
+
+        var data2 = [trace2];
+
+        Plotly.newPlot("bubble", data2)
     });
 
 };
