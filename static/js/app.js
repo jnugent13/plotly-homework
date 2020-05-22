@@ -1,20 +1,25 @@
 var samples = "../../samples.json"
-
 var menu = d3.select("#selDataset");
-var optionValue = menu.property("value");
-menu.on("change", optionChanged);
 
-function optionChanged() {
+function _init_() {
     d3.json(samples).then(function(data) {
-        // Add list of ids to drop-down menu    
         var ids = data.names;
         ids.forEach(function(id) {
             menu.append("option").text(id);
         });
+    });
+};
 
+_init_();
+
+var optionValue = menu.property("value");
+menu.on("change", optionChanged);
+
+function optionChanged() {
+    d3.json(samples).then(function(data ) {
         var summaryData = {}
-        for (i=0; i<ids.length; i++) {
-            summaryData.id = ids[i];
+        for (i=0; i<data.samples[0].length; i++) {
+            summaryData.id = data.samples[i].id;
             summaryData.sample_values = data.samples[i].sample_values;
             summaryData.otu_ids = data.samples[i].otu_ids;
             summaryData.otu_labels = data.samples[i].otu_labels;
@@ -64,5 +69,4 @@ function optionChanged() {
 
         Plotly.newPlot("bubble", data2)
     });
-
 };
